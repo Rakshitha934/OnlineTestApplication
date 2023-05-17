@@ -1,0 +1,69 @@
+<html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+
+  <h1> Online Test</h1>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+    <style>
+      h1{
+        text-align: center;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: -10%;
+        background-color: rgba(117, 113, 168, 0.397);
+      }
+  
+      .selected {
+        background-color: #cce5ff;
+      }
+  
+      .container {
+        height: 100vh;
+        display: flexbox;
+        align-items: center;
+        justify-content: start;
+      }
+    </style>
+
+</head>
+
+
+<body>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-sm-8 offset-2">
+        <div *ngIf="currentQuiz < quizzes.length">
+          <p class="text-center mb-4">{{ currentQuiz + 1 }} of {{ quizzes.length }}</p>
+          <h1>{{ quizzes[currentQuiz].question }}</h1>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item" aria-current="true" *ngFor="let quiz of quizzes[currentQuiz].answer">
+              <label>
+                <input type="radio" name="options" (change)="onAnswer(quiz.correct)" [disabled]="answerSelected">
+                {{ quiz.option }}
+              </label>
+            </li>
+          </ul>
+          <button class="btn btn-primary mt-4" (click)="nextQuestion()" [disabled]="!answerSelected">Next</button>
+        </div>
+        <div *ngIf="currentQuiz >= quizzes.length">
+          <button class="btn btn-success btn-block mt-4" (click)="showResult()">Show Result</button>
+          <div *ngIf="result" class="result mt-4">
+            Correct Answers: {{ correctAnswers }} || Incorrect Answers: {{ incorrectAnswers }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
